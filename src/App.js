@@ -1,126 +1,151 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
-import { TextField, Button, Stack, MenuItem } from '@mui/material';
+import { Button, Stack, MenuItem, TextField } from '@mui/material'; // Correct import here
+import { useForm, Controller } from 'react-hook-form';
 
 function App() {
-  const [formData, setFormData] = useState({
-    contactName: '',
-    email: '',
-    department: '',
-    subject: '',
-    inputText: '',
-    classification: '',
-    priority: '',
-    dueDate: '',
-  });
+  const { handleSubmit, control, formState } = useForm();
+  const { isValid } = formState;
 
-  const isFormValid = Object.values(formData).every((value) => value.trim() !== '');
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (isFormValid) {
-      console.log(formData); // Log form data to the console
-    } else {
-      alert('Please fill out all the required fields.');
-    }
+  const onSubmit = (data) => {
+    console.log(data); // Log form data to the console
   };
 
   return (
     <div className="App">
       <h1>Create a Ticket</h1>
-      <form onSubmit={handleSubmit} noValidate>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Stack spacing={2} width={500}>
-          
-        <TextField
-            label='Contact Name'
-            type='text'
+          <Controller
             name="contactName"
-            value={formData.contactName}
-            onChange={handleInputChange}
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                label='Contact Name'
+                type='text'
+                {...field}
+              />
+            )}
           />
-          <TextField
-            label='Email'
-            type='email'
+
+          <Controller
             name="email"
-            value={formData.email}
-            onChange={handleInputChange}
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                label='Email'
+                type='email'
+                {...field}
+              />
+            )}
           />
 
-          <TextField
-            select
-            label="Department"
+          <Controller
             name="department"
-            value={formData.department}
-            onChange={handleInputChange}
-          >
-            <MenuItem value="1">1</MenuItem>
-            <MenuItem value="2">2</MenuItem>
-            <MenuItem value="3">3</MenuItem>
-          </TextField>
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                select
+                label="Department"
+                {...field}
+              >
+                <MenuItem value="1">1</MenuItem>
+                <MenuItem value="2">2</MenuItem>
+                <MenuItem value="3">3</MenuItem>
+              </TextField>
+            )}
+          />
 
-          <TextField
-            label='Subject'
-            type='text'
+          <Controller
             name="subject"
-            value={formData.subject}
-            onChange={handleInputChange}
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                label='Subject'
+                type='text'
+                {...field}
+              />
+            )}
           />
 
-          <TextField
-            type='text'
-            label='Input text'
-            multiline
-            rows={4}
+          <Controller
             name="inputText"
-            value={formData.inputText}
-            onChange={handleInputChange}
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                type='text'
+                label='Input text'
+                multiline
+                rows={4}
+                {...field}
+              />
+            )}
           />
 
-          <TextField
-            select
-            label="Classification"
+          <Controller
             name="classification"
-            value={formData.classification}
-            onChange={handleInputChange}
-          >
-            <MenuItem value="1">1</MenuItem>
-            <MenuItem value="2">2</MenuItem>
-            <MenuItem value="3">3</MenuItem>
-          </TextField>
-
-          <TextField
-            select
-            label="Priority"
-            name="priority"
-            value={formData.priority}
-            onChange={handleInputChange}
-          >
-            <MenuItem value="1">1</MenuItem>
-            <MenuItem value="2">2</MenuItem>
-            <MenuItem value="3">3</MenuItem>
-          </TextField>
-
-          <TextField
-            label="Due Date"
-            type="date"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            name="dueDate"
-            value={formData.dueDate}
-            onChange={handleInputChange}
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                select
+                label="Classification"
+                {...field}
+              >
+                <MenuItem value="1">1</MenuItem>
+                <MenuItem value="2">2</MenuItem>
+                <MenuItem value="3">3</MenuItem>
+              </TextField>
+            )}
           />
 
+          <Controller
+            name="priority"
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                select
+                label="Priority"
+                {...field}
+              >
+                <MenuItem value="1">1</MenuItem>
+                <MenuItem value="2">2</MenuItem>
+                <MenuItem value="3">3</MenuItem>
+              </TextField>
+            )}
+          />
 
-          <Button type='submit' variant="contained" disabled={!isFormValid}>
+          <Controller
+            name="dueDate"
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                label="Due Date"
+                type="date"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                {...field}
+              />
+            )}
+          />
+
+          <Button type='submit' variant="contained" disabled={!isValid}>
             Save
           </Button>
         </Stack>
@@ -130,4 +155,3 @@ function App() {
 }
 
 export default App;
-
