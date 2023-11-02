@@ -16,7 +16,7 @@ function App() {
       <h1>Create a Ticket</h1>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Stack spacing={2} width={500}>
-          <Controller
+          {/* <Controller
             name="contactName"
             control={control}
             defaultValue=""
@@ -28,9 +28,9 @@ function App() {
                 {...field}
               />
             )}
-          />
+          /> */}
 
-          <Controller
+          {/* <Controller
             name="email"
             control={control}
             defaultValue=""
@@ -42,7 +42,7 @@ function App() {
                 {...field}
               />
             )}
-          />
+          /> */}
 
           <Controller
             name="department"
@@ -53,6 +53,24 @@ function App() {
               <TextField
                 select
                 label="Department"
+                {...field}
+              >
+                <MenuItem value="1">1</MenuItem>
+                <MenuItem value="2">2</MenuItem>
+                <MenuItem value="3">3</MenuItem>
+              </TextField>
+            )}
+          />
+
+          <Controller
+            name="classification"
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                select
+                label="Classification"
                 {...field}
               >
                 <MenuItem value="1">1</MenuItem>
@@ -86,27 +104,9 @@ function App() {
                 type='text'
                 label='Input text'
                 multiline
-                rows={4}
+                rows={6}
                 {...field}
               />
-            )}
-          />
-
-          <Controller
-            name="classification"
-            control={control}
-            defaultValue=""
-            rules={{ required: true }}
-            render={({ field }) => (
-              <TextField
-                select
-                label="Classification"
-                {...field}
-              >
-                <MenuItem value="1">1</MenuItem>
-                <MenuItem value="2">2</MenuItem>
-                <MenuItem value="3">3</MenuItem>
-              </TextField>
             )}
           />
 
